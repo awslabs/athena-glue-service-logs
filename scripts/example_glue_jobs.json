@@ -1,0 +1,34 @@
+{
+    "defaults": {
+        "RAW_DATABASE_NAME": "aws_service_logs_raw",
+        "CONVERTED_DATABASE_NAME": "aws_service_logs"
+    },
+    "alb": {
+        "JOB_NAME_BASE": "ALB",
+        "RAW_TABLE_NAME":"alb_raw_logs",
+        "CONVERTED_TABLE_NAME":"alb",
+        "S3_CONVERTED_TARGET":"s3://bucket/converted/alb",
+        "S3_SOURCE_LOCATION":"s3://bucket/alb/AWSLogs/ACCOUNT_ID/elasticloadbalancing/"
+    },
+    "cloudfront": {
+        "JOB_NAME_BASE": "CloudFront",
+        "RAW_TABLE_NAME":"cloudfront_raw_logs",
+        "CONVERTED_TABLE_NAME":"cloudfront",
+        "S3_CONVERTED_TARGET":"s3://bucket/converted/cloudfront",
+        "S3_SOURCE_LOCATION":"s3://bucket/cloudfront/"
+    },
+    "s3_access": {
+        "JOB_NAME_BASE": "S3Access",
+        "RAW_TABLE_NAME":"s3_access_raw_logs",
+        "CONVERTED_TABLE_NAME":"s3_access",
+        "S3_CONVERTED_TARGET":"s3://bucket/converted/s3_access",
+        "S3_SOURCE_LOCATION":"s3://bucket/s3_access/"
+    },
+    "cloudtrail": {
+        "JOB_NAME_BASE": "CloudTrail",
+        "RAW_TABLE_NAME":"cloudtrail_raw_logs",
+        "CONVERTED_TABLE_NAME":"cloudtrail",
+        "S3_CONVERTED_TARGET":"s3://bucket/converted/cloudtrail",
+        "S3_SOURCE_LOCATION":"s3://bucket/some_prefix/AWSLogs/ACCOUNT_ID/CloudTrail/"
+    }
+}

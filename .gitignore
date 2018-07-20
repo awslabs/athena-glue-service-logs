@@ -1,0 +1,17 @@
+# Python cruft
+__pycache__/
+.pytest_cache/
+*.py[cod]
+*$py.class
+*.egg-info/
+
+# Build artifacts
+dist/
+build/
+venv/
+
+# macOS
+.DS_Store
+
+# project-specific files
+scripts/glue_jobs.json
