@@ -44,6 +44,7 @@ from athena_glue_service_logs.elb_classic import ELBRawCatalog, ELBConvertedCata
 from athena_glue_service_logs.cloudtrail import CloudTrailRawCatalog, CloudTrailConvertedCatalog
 from athena_glue_service_logs.cloudfront import CloudFrontRawCatalog, CloudFrontConvertedCatalog
 from athena_glue_service_logs.s3_access import S3AccessRawCatalog, S3AccessConvertedCatalog
+from athena_glue_service_logs.vpc_flow import VPCFlowRawCatalog, VPCFlowConvertedCatalog
 from athena_glue_service_logs.partitioners.null_partitioner import NullPartitioner
 from athena_glue_service_logs.converter import DataConverter
 
@@ -60,6 +61,7 @@ class JobRunner(object):
         'cloudtrail': [CloudTrailRawCatalog, CloudTrailConvertedCatalog],
         'cloudfront': [CloudFrontRawCatalog, CloudFrontConvertedCatalog],
         's3_access': [S3AccessRawCatalog, S3AccessConvertedCatalog],
+        'vpc_flow': [VPCFlowRawCatalog, VPCFlowConvertedCatalog],
     }
 
     def __init__(self, service_name):

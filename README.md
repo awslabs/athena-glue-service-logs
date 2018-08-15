@@ -20,6 +20,7 @@ The following AWS Service Logs are currently supported:
   - CloudTrail
   - CloudFront
   - S3 Access
+  - VPC Flow
 
 ## Glue Jobs
 
@@ -45,6 +46,7 @@ When creating a job, you must specify a service name - this service name indicat
 | CloudFront | cloudfront |
 | CloudTrail | cloudtrail | 
 | S3 Access | s3_access |
+| VPC Flow | vpc_flow |
 
 ## Creating a job
 
@@ -138,6 +140,11 @@ The source location should point to that prefix:
 ### S3 Access Logs
 
 S3 Access logs are similar to CloudFront in that they are delivered in a single prefix. Make sure your source location is configured as above.
+
+### VPC Flow Logs
+
+VPC Flow logs also deliver into the AWSLogs prefix: 
+`s3://<BUCKET>/<PREFIX>/AWSLogs/<AWS_ACCOUNT_ID>/vpcflowlogs/`
 
 ## FAQ
 
