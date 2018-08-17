@@ -44,7 +44,7 @@ release: package
 # Since we want to be able to test multiple service types, let's make something more dynamic.
 # For now, this requires the `jq` utility
 define get_variable
-    $(shell cat $(JOB_DEFINITION_FILE) | jq '[.defaults,.$(service)] | add' | jq -r '.$(1)')
+$(shell cat $(JOB_DEFINITION_FILE) | jq '[.defaults,.$(service)] | add' | jq -r '.$(1)')
 endef
 JOB_NAME_BASE = $(call get_variable,JOB_NAME_BASE)
 RAW_DATABASE_NAME = $(call get_variable,RAW_DATABASE_NAME)

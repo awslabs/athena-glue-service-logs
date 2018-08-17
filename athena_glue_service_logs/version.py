@@ -13,4 +13,4 @@
 
 """Version number of our project"""
 
-__version__ = 'v5.2.1'
+__version__ = 'v5.3.0'

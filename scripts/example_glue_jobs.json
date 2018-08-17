@@ -30,5 +30,12 @@
         "CONVERTED_TABLE_NAME":"cloudtrail",
         "S3_CONVERTED_TARGET":"s3://bucket/converted/cloudtrail",
         "S3_SOURCE_LOCATION":"s3://bucket/some_prefix/AWSLogs/ACCOUNT_ID/CloudTrail/"
+    },
+    "vpc_flow": {
+        "JOB_NAME_BASE": "VPCFlow",
+        "RAW_TABLE_NAME":"vpcflow_raw_logs",
+        "CONVERTED_TABLE_NAME":"vpcflow",
+        "S3_CONVERTED_TARGET":"s3://bucket/converted/vpcflow",
+        "S3_SOURCE_LOCATION":"s3://bucket/some_prefix/AWSLogs/ACCOUNT_ID/vpcflowlogs/"
     }
 }
