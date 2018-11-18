@@ -64,7 +64,7 @@ class ALBConvertedCatalog(BaseCatalogManager):
                 {"Name": "domain_name", "Type": "string"},
                 {"Name": "chosen_cert_arn", "Type": "string"},
                 {"Name": "matched_rule_priority", "Type": "string"},
-                {"Name": "request_creation_time", "Type": "string"},
+                {"Name": "request_creation_time", "Type": "timestamp"},
                 {"Name": "actions_executed", "Type": "string"},
                 {"Name": "redirect_url", "Type": "string"}
             ],
@@ -135,3 +135,20 @@ class ALBRawCatalog(BaseCatalogManager):
             "BucketColumns": [],  # Required or SHOW CREATE TABLE fails
             "Parameters": {}  # Required or create_dynamic_frame.from_catalog fails for partitions
         }
+
+    def _cast_timestamps(self, dynamic_frame):
+        LOGGER.info("Performing vpc_flow custom conversion action: time conversions")
+        from awsglue.transforms import Map
+        from datetime import datetime
+
+        # Note that this framework currently only supports string timestamps in the source
+        def cast_timestamps(record):
+            record['request_creation_time'] = datetime.utcfromtimestamp(int(record['request_creation_time'])).isoformat()
+            return record
+
+        mapped_dyf = Map.apply(frame=dynamic_frame, f=cast_timestamps)
+        return mapped_dyf
+
+    def conversion_actions(self, dynamic_frame):
+        timestampDynF = self._cast_timestamps(dynamic_frame)
+        return timestampDynF
