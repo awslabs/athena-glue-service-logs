@@ -62,7 +62,11 @@ class ALBConvertedCatalog(BaseCatalogManager):
                 {"Name": "target_group_arn", "Type": "string"},
                 {"Name": "trace_id", "Type": "string"},
                 {"Name": "domain_name", "Type": "string"},
-                {"Name": "chosen_cert_arn", "Type": "string"}
+                {"Name": "chosen_cert_arn", "Type": "string"},
+                {"Name": "matched_rule_priority", "Type": "string"},
+                {"Name": "request_creation_time", "Type": "string"},
+                {"Name": "actions_executed", "Type": "string"},
+                {"Name": "redirect_url", "Type": "string"}
             ],
             "Location": self.partitioner.build_partitioned_path(partition_values),
             "InputFormat": "org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat",
@@ -111,7 +115,11 @@ class ALBRawCatalog(BaseCatalogManager):
                 {"Name": "target_group_arn", "Type": "string"},
                 {"Name": "trace_id", "Type": "string"},
                 {"Name": "domain_name", "Type": "string"},
-                {"Name": "chosen_cert_arn", "Type": "string"}
+                {"Name": "chosen_cert_arn", "Type": "string"},
+                {"Name": "matched_rule_priority", "Type": "string"},
+                {"Name": "request_creation_time", "Type": "string"},
+                {"Name": "actions_executed", "Type": "string"},
+                {"Name": "redirect_url", "Type": "string"}
             ],
             "Location": self.partitioner.build_partitioned_path(partition_values),
             "InputFormat": "org.apache.hadoop.mapred.TextInputFormat",
@@ -119,7 +127,8 @@ class ALBRawCatalog(BaseCatalogManager):
             "SerdeInfo": {
                 "SerializationLibrary": "com.amazonaws.glue.serde.GrokSerDe",
                 "Parameters": {
-                    "input.format": "%{NOTSPACE:type} %{NOTSPACE:time} %{NOTSPACE:elb} %{NOTSPACE:client_ip_port} %{NOTSPACE:target_ip_port} %{BASE10NUM:request_processing_time:double} %{BASE10NUM:target_processing_time:double} %{BASE10NUM:response_processing_time:double} %{NOTSPACE:elb_status_code} %{NOTSPACE:target_status_code} %{NOTSPACE:received_bytes:int} %{NOTSPACE:sent_bytes:int} \"%{NOTSPACE:request_verb} %{NOTSPACE:request_url} %{INSIDE_QS:request_proto}\" \"%{INSIDE_QS:user_agent}\" %{NOTSPACE:ssl_cipher} %{NOTSPACE:ssl_protocol} %{NOTSPACE:target_group_arn} \"%{INSIDE_QS:trace_id}\" \"%{INSIDE_QS:domain_name}\" \"%{INSIDE_QS:chosen_cert_arn}\"",  # noqa pylint: disable=C0301
+                    "input.format": "%{NOTSPACE:type} %{NOTSPACE:time} %{NOTSPACE:elb} %{NOTSPACE:client_ip_port} %{NOTSPACE:target_ip_port} %{BASE10NUM:request_processing_time:double} %{BASE10NUM:target_processing_time:double} %{BASE10NUM:response_processing_time:double} %{NOTSPACE:elb_status_code} %{NOTSPACE:target_status_code} %{NOTSPACE:received_bytes:int} %{NOTSPACE:sent_bytes:int} \"%{NOTSPACE:request_verb} %{NOTSPACE:request_url} %{INSIDE_QS:request_proto}\" \"%{INSIDE_QS:user_agent}\" %{NOTSPACE:ssl_cipher} %{NOTSPACE:ssl_protocol} %{NOTSPACE:target_group_arn} \"%{INSIDE_QS:trace_id}\" \"%{INSIDE_QS:domain_name}\" \"%{INSIDE_QS:chosen_cert_arn}\" %{NOTSPACE:matched_rule_priority} %{NOTSPACE:request_creation_time} \"%{INSIDE_QS:actions_executed}\" \"%{INSIDE_QS:redirect_url}\""
+                    ,  # noqa pylint: disable=C0301
                     "input.grokCustomPatterns": "INSIDE_QS ([^\\\"]*)"
                 }
             },
