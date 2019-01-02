@@ -64,7 +64,7 @@ class ELBRawCatalog(ALBRawCatalog):
             "SerdeInfo": {
                 "SerializationLibrary": "com.amazonaws.glue.serde.GrokSerDe",
                 "Parameters": {
-                    "input.format": "%{NOTSPACE:time} %{NOTSPACE:elb} %{NOTSPACE:client_ip_port} %{NOTSPACE:target_ip_port} %{BASE10NUM:request_processing_time:double} %{BASE10NUM:target_processing_time:double} %{BASE10NUM:response_processing_time:double} %{NOTSPACE:elb_status_code} %{NOTSPACE:target_status_code} %{NOTSPACE:received_bytes:int} %{NOTSPACE:sent_bytes:int} \"%{NOTSPACE:request_verb} %{NOTSPACE:request_url} %{INSIDE_QS:request_proto}\" \"%{INSIDE_QS:user_agent}\" %{NOTSPACE:ssl_cipher} %{NOTSPACE:ssl_protocol}",  # noqa pylint: disable=C0301
+                    "input.format": "%{NOTSPACE:time} %{NOTSPACE:elb} %{NOTSPACE:client_ip_port} %{NOTSPACE:target_ip_port} %{BASE10NUM:request_processing_time:double} %{BASE10NUM:target_processing_time:double} %{BASE10NUM:response_processing_time:double} %{NOTSPACE:elb_status_code} %{NOTSPACE:target_status_code} %{NOTSPACE:received_bytes:int} %{NOTSPACE:sent_bytes:int} \"%{NOTSPACE:request_verb} %{NOTSPACE:request_url} %{INSIDE_QS:request_proto}\" %{QS:user_agent} %{NOTSPACE:ssl_cipher} %{NOTSPACE:ssl_protocol}",  # noqa pylint: disable=C0301
                     "input.grokCustomPatterns": "INSIDE_QS ([^\\\"]*)"
                 }
             },
