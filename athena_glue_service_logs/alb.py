@@ -128,7 +128,6 @@ class ALBRawCatalog(BaseCatalogManager):
                 "SerializationLibrary": "com.amazonaws.glue.serde.GrokSerDe",
                 "Parameters": {
                     "input.format": "%{NOTSPACE:type} %{NOTSPACE:time} %{NOTSPACE:elb} %{NOTSPACE:client_ip_port} %{NOTSPACE:target_ip_port} %{BASE10NUM:request_processing_time:double} %{BASE10NUM:target_processing_time:double} %{BASE10NUM:response_processing_time:double} %{NOTSPACE:elb_status_code} %{NOTSPACE:target_status_code} %{NOTSPACE:received_bytes:int} %{NOTSPACE:sent_bytes:int} \"%{NOTSPACE:request_verb} %{NOTSPACE:request_url} %{INSIDE_QS:request_proto}\" \"%{INSIDE_QS:user_agent}\" %{NOTSPACE:ssl_cipher} %{NOTSPACE:ssl_protocol} %{NOTSPACE:target_group_arn} \"%{INSIDE_QS:trace_id}\" \"%{INSIDE_QS:domain_name}\" \"%{INSIDE_QS:chosen_cert_arn}\" %{NOTSPACE:matched_rule_priority} %{NOTSPACE:request_creation_time} \"%{INSIDE_QS:actions_executed}\" \"%{INSIDE_QS:redirect_url}\""
-                    ,  # noqa pylint: disable=C0301
                     "input.grokCustomPatterns": "INSIDE_QS ([^\\\"]*)"
                 }
             },
