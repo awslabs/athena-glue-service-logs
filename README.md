@@ -73,7 +73,7 @@ To deploy the scripts to your own bucket, override the `RELEASE_BUCKET` environm
 
 ```shell
 RELEASE_BUCKET=<YOUR_BUCKET_NAME> make private_release
-RELEASE_BUCKET=<YOUR_BUCKET_NAME> make create_job service_name=<SERVICE_NAME>
+RELEASE_BUCKET=<YOUR_BUCKET_NAME> make create_job service=<SERVICE_NAME>
 ```
 
 `SERVICE_NAME` is the key in the config file. Don't change those keys as they are also references to the actual Glue scripts.
