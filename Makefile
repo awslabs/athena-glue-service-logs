@@ -15,6 +15,10 @@ RELEASE_LATEST_PATH=$(RELEASE_S3_LOCATION)/athena_glue_converter_latest.zip
 RELEASE_PATH_KEY=$(shell echo $(RELEASE_PATH) | cut -f4- -d/)
 RELEASE_LATEST_PATH_KEY=$(shell echo $(RELEASE_LATEST_PATH) | cut -f4- -d/)
 
+# Temporary directory used for writing out Glue state files
+TEMP_PREFIX=tmp/glue
+GLUE_TEMP_S3_LOCATION?=s3://$(RELEASE_BUCKET)/$(TEMP_PREFIX)
+
 .PHONY: test
 
 next_version:
@@ -66,7 +70,7 @@ create_job: require_service
 		--command Name=glueetl,ScriptLocation=$(SAMPLE_SCRIPT_PATH) \
 		--default-arguments '{ \
 			"--extra-py-files":"$(RELEASE_LATEST_PATH)", \
-			"--TempDir":"s3://only-required-for-redshift/tmp", \
+			"--TempDir":"$(GLUE_TEMP_S3_LOCATION)", \
 			"--job-bookmark-option":"job-bookmark-enable", \
 			"--raw_database_name":"$(RAW_DATABASE_NAME)", \
 			"--raw_table_name":"$(RAW_TABLE_NAME)", \
