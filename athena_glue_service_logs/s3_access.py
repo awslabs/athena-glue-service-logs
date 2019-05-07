@@ -49,6 +49,12 @@ class S3AccessRawCatalog(BaseCatalogManager):
                 {"Name": "referrer", "Type": "string"},
                 {"Name": "user_agent", "Type": "string"},
                 {"Name": "version_id", "Type": "string"},
+                {"Name": "host_id", "Type": "string"},
+                {"Name": "signature_version", "Type": "string"},
+                {"Name": "cipher_suite", "Type": "string"},
+                {"Name": "authentication_type", "Type": "string"},
+                {"Name": "host_header", "Type": "string"},
+                {"Name": "tls_version", "Type": "string"},
             ],
             "Location": self.partitioner.build_partitioned_path(partition_values),
             "InputFormat": "org.apache.hadoop.mapred.TextInputFormat",
@@ -56,8 +62,8 @@ class S3AccessRawCatalog(BaseCatalogManager):
             "SerdeInfo": {
                 "SerializationLibrary": "com.amazonaws.glue.serde.GrokSerDe",
                 "Parameters": {
-                    "input.format": "%{NOTSPACE:bucket_owner} %{NOTSPACE:bucket} \[%{INSIDE_BRACKETS:time}\] %{NOTSPACE:remote_ip} %{NOTSPACE:requester} %{NOTSPACE:request_id} %{NOTSPACE:operation} %{NOTSPACE:key} \"?%{INSIDE_QS:request_uri}\"? %{NOTSPACE:http_status} %{NOTSPACE:error_code} %{NOTSPACE:bytes_sent} %{NOTSPACE:object_size} %{NOTSPACE:total_time} %{NOTSPACE:turnaround_time} \"?%{INSIDE_QS:referrer}\"? \"?%{INSIDE_QS:user_agent}\"? %{NOTSPACE:version_id}",  # noqa pylint: disable=C0301
-                    "input.grokCustomPatterns": "INSIDE_QS ([^\"]*)\nINSIDE_BRACKETS ([^\\]]*)"
+                    "input.format": "%{NOTSPACE:bucket_owner} %{NOTSPACE:bucket} \\[%{INSIDE_BRACKETS:time}\\] %{NOTSPACE:remote_ip} %{NOTSPACE:requester} %{NOTSPACE:request_id} %{NOTSPACE:operation} %{NOTSPACE:key} \"%{INSIDE_QS:request_uri}\" %{NOTSPACE:http_status} %{NOTSPACE:error_code} %{NOTSPACE:bytes_sent} %{NOTSPACE:object_size} %{NOTSPACE:total_time} %{NOTSPACE:turnaround_time} \"?%{INSIDE_QS:referrer}\"? \"%{INSIDE_QS:user_agent}\" %{NOTSPACE:version_id}(%{2019_OPTION_1}|%{2019_OPTION_2}|%{2019_OPTION_3}|%{2019_OPTION_4})?",  # noqa pylint: disable=C0301
+                    "input.grokCustomPatterns": "INSIDE_QS ([^\"]*)\nINSIDE_BRACKETS ([^\\]]*)\nSIGNATURE_VERSION (SigV\\d+|-)\nTLS_VERSION (TLS.+|-)\nS3_FIELDS_2019_001 (%{NOTSPACE:host_id} %{SIGNATURE_VERSION:signature_version} %{NOTSPACE:cipher_suite} %{NOTSPACE:auth_type} %{NOTSPACE:header})\nS3_FIELDS_2019_002 (%{S3_FIELDS_2019_001} %{TLS_VERSION:tls_version})\n2019_OPTION_1 (\\s\\S+\\s%{S3_FIELDS_2019_002})\n2019_OPTION_2 (\\s%{S3_FIELDS_2019_002})\n2019_OPTION_3 (\\s\\S+\\s%{S3_FIELDS_2019_001})\n2019_OPTION_4 (\\s%{NOTSPACE:UNWANTED})"  # noqa pylint: disable=C0301
                 }
             },
             "BucketColumns": [],  # Required or SHOW CREATE TABLE fails
@@ -110,6 +116,12 @@ class S3AccessConvertedCatalog(BaseCatalogManager):
                 {"Name": "referrer", "Type": "string"},
                 {"Name": "user_agent", "Type": "string"},
                 {"Name": "version_id", "Type": "string"},
+                {"Name": "host_id", "Type": "string"},
+                {"Name": "signature_version", "Type": "string"},
+                {"Name": "cipher_suite", "Type": "string"},
+                {"Name": "authentication_type", "Type": "string"},
+                {"Name": "host_header", "Type": "string"},
+                {"Name": "tls_version", "Type": "string"},
             ],
             "Location": self.partitioner.build_partitioned_path(partition_values),
             "InputFormat": "org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat",
