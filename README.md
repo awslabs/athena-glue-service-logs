@@ -37,7 +37,7 @@ That said, if there are additional changes you wish to make to the data, you're 
 
 ## Service Names
 
-When creating a job, you must specify a service name - this service name indicates which script to copy over fr the Glue job. Here's a mapping of Service Log types to their names.
+When creating a job, you must specify a service name - this service name indicates which script to copy over for the Glue job. Here's a mapping of Service Log types to their names.
 
 | Service Log | Service Name Keyword | 
 | ----- | ----- |
