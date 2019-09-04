@@ -6,9 +6,9 @@
 
 # http://www.apache.org/licenses/LICENSE-2.0
 
-# or in the "license" file accompanying this file. This file is distributed 
-# on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either 
-# express or implied. See the License for the specific language governing 
+# or in the "license" file accompanying this file. This file is distributed
+# on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+# express or implied. See the License for the specific language governing
 # permissions and limitations under the License.
 
 """The primary class responsible for orchestrating conversion of AWS Service Logs
@@ -129,7 +129,7 @@ class JobRunner(object):
     def add_new_optimized_partitions(self):
         """For the optimized catalog, check and see if any new partitions exist for UTC today.
         Continue this check for every day previous until we reach a day where a partition exists.
-        
+
         If this is the initial run, add whatever partitions we can find.
         """
         if self.initial_run and isinstance(self.raw_catalog.partitioner, NullPartitioner):
