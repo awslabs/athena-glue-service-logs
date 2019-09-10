@@ -1,5 +1,5 @@
 # Note that this currently won't work if you don't have all the proper libraries installed.
-$(eval SCRIPT_VERSION=$(shell python -c 'from athena_glue_service_logs import version; print version.__version__'))
+$(eval SCRIPT_VERSION=$(shell python -c 'from __future__ import print_function; from athena_glue_service_logs import version; print(version.__version__)'))
 
 # Local assets
 PACKAGE_FILE=dist/athena_glue_converter_$(SCRIPT_VERSION).zip
@@ -58,7 +58,7 @@ CONVERTED_TABLE_NAME = $(call get_variable,CONVERTED_TABLE_NAME)
 S3_CONVERTED_TARGET = $(call get_variable,S3_CONVERTED_TARGET)
 S3_SOURCE_LOCATION = $(call get_variable,S3_SOURCE_LOCATION)
 
-require_service: 
+require_service:
 	@test -n "$(service)" || (echo "'service' variable must be defined" && exit 1)
 
 create_job: require_service
