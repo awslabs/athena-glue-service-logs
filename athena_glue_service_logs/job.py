@@ -33,7 +33,7 @@ Then the console will StartJobRun with the resulting Job name and several parame
 """
 import sys
 import json
-import urllib2
+import urllib.request, urllib.error, urllib.parse
 import logging
 
 from awsglue.utils import getResolvedOptions
@@ -53,7 +53,7 @@ logging.basicConfig(level=logging.INFO)
 LOGGER = logging.getLogger(__name__)
 
 
-class JobRunner(object):
+class JobRunner:
     """This class manages the orchestration of new jobs, including parsing arguments and control flow"""
     SERVICE_DEFINITIONS = {
         'alb': [ALBRawCatalog, ALBConvertedCatalog],
@@ -106,7 +106,7 @@ class JobRunner(object):
 
     def get_instance_region(self):
         """Retrieve the current AWS Region from the Instance Metadata"""
-        contents = urllib2.urlopen("http://169.254.169.254/latest/dynamic/instance-identity/document").read()
+        contents = urllib.request.urlopen("http://169.254.169.254/latest/dynamic/instance-identity/document").read()
         return json.loads(contents).get('region')
 
     def create_tables_if_needed(self):

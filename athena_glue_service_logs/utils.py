@@ -13,12 +13,12 @@
 
 """Utility methods for AthenaGlueServiceLogs module"""
 import re
-from urlparse import urlparse
+from urllib.parse import urlparse
 
 import boto3
 
 
-class S3Reader(object):
+class S3Reader:
     """Utility class to access S3
 
     Provide an S3 URI (s3://<bucket>/<prefix>) to initialize. All operations will execute in the

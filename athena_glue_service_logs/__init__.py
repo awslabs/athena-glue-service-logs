@@ -12,7 +12,3 @@
 # permissions and limitations under the License.
 
 """athena_glue_service_logs is a library for converting AWS Service Logs into a more Athena-friendly format"""
-import sys
-
-# Ensure python version 2.7.x - Glue only runs 2.7
-assert sys.version_info[:2] == (2, 7), "Glue currently supports Python 2.7 only."
