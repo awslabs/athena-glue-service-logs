@@ -79,7 +79,7 @@ def test_partition_scanner(mocker):
 
     s3_stub.add_response(response_with_prefixes(), delimiter_request())
     # Add in a response for each region
-    for i in xrange(2):
+    for i in range(2):
         s3_stub.add_response(
             response_for_objects(region_s3_keys()[i]),
             prefix_request(response_with_prefixes()['CommonPrefixes'][i]['Prefix'])

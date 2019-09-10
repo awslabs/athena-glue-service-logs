@@ -129,7 +129,7 @@ def test_find_all_new_partitions(mocker):
 
     requests = []
     # Create request parameters for every day since (and including) today
-    for i in xrange(DatePartitioner.MAX_RECENT_DAYS):
+    for i in range(DatePartitioner.MAX_RECENT_DAYS):
         requests.append(list_request_for_ts(today() - timedelta(days=i)))
 
     s3_stub = S3Stubber.for_multiple_requests(
