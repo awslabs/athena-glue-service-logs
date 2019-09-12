@@ -44,3 +44,12 @@ class S3Stubber(object):
 
     def add_response(self, response_body, request_params):
         self.stubber.add_response(self.method_name, response_body, request_params)
+
+
+class GlueStubber(object):
+    def __init__(self):
+        self.client = boto3.client("glue")
+        self.stubber = Stubber(self.client)
+
+    def add_response_for_method(self, method_name, response_body, request_params):
+        self.stubber.add_response(method_name, response_body, request_params)
