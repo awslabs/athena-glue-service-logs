@@ -6,9 +6,9 @@
 
 # http://www.apache.org/licenses/LICENSE-2.0
 
-# or in the "license" file accompanying this file. This file is distributed 
-# on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either 
-# express or implied. See the License for the specific language governing 
+# or in the "license" file accompanying this file. This file is distributed
+# on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+# express or implied. See the License for the specific language governing
 # permissions and limitations under the License.
 
 """Catalog Manager includes classes for dealing with Glue Data Catalogs"""
@@ -160,11 +160,17 @@ class BaseCatalogManager(metaclass=abc.ABCMeta):
 
         Returns a sorted list of tuples that make up the partition values.
         """
-        partition_data = self.glue_client.get_partitions(
-            DatabaseName=self.database_name,
-            TableName=self.table_name
-        )
-        partition_values = [p['Values'] for p in partition_data['Partitions']]
+        partition_values = []
+        args = {'DatabaseName': self.database_name, 'TableName': self.table_name}
+
+        while True:
+            partition_data = self.glue_client.get_partitions(**args)
+            partition_values.extend([p['Values'] for p in partition_data['Partitions']])
+            if 'NextToken' in partition_data:
+                args['NextToken'] = partition_data.get('NextToken')
+            else:
+                break
+
         partition_values.sort()
 
         return partition_values

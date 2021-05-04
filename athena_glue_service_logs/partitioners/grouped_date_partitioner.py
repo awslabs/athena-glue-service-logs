@@ -6,9 +6,9 @@
 
 # http://www.apache.org/licenses/LICENSE-2.0
 
-# or in the "license" file accompanying this file. This file is distributed 
-# on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either 
-# express or implied. See the License for the specific language governing 
+# or in the "license" file accompanying this file. This file is distributed
+# on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+# express or implied. See the License for the specific language governing
 # permissions and limitations under the License.
 
 """A Partitioner that has date ranges grouped in another partition."""
@@ -59,7 +59,9 @@ class GroupedDatePartitioner(BasePartitioner):
         return [[region] + d for d in new_dates]
 
     def find_recent_partitions(self, existing_partitions):
-        """Search for recent grouped date partitions on S3 and return a list of the partition values"""
+        """Search for recent grouped date partitions on S3 and return a list of the partition values.
+
+        Note that this uses the existing_partitions list to determine the region/grouping names."""
         parts_by_group = defaultdict(list)
         partitions_to_add = []
 
