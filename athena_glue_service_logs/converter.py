@@ -19,7 +19,7 @@ logging.basicConfig(level=logging.INFO)
 LOGGER = logging.getLogger(__name__)
 
 
-class DataConverter(object):
+class DataConverter:
     """This class takes data from a source table and converts it into Parquet format and partitions the data
 
     The class used for the `optimized_catalog` variable can have a `conversion_actions` method that

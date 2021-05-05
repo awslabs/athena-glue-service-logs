@@ -1,5 +1,5 @@
 # Note that this currently won't work if you don't have all the proper libraries installed.
-$(eval SCRIPT_VERSION=$(shell python -c 'from athena_glue_service_logs import version; print version.__version__'))
+$(eval SCRIPT_VERSION=$(shell python -c 'from __future__ import print_function; from athena_glue_service_logs import version; print(version.__version__)'))
 
 # Local assets
 PACKAGE_FILE=dist/athena_glue_converter_$(SCRIPT_VERSION).zip
@@ -58,7 +58,7 @@ CONVERTED_TABLE_NAME = $(call get_variable,CONVERTED_TABLE_NAME)
 S3_CONVERTED_TARGET = $(call get_variable,S3_CONVERTED_TARGET)
 S3_SOURCE_LOCATION = $(call get_variable,S3_SOURCE_LOCATION)
 
-require_service: 
+require_service:
 	@test -n "$(service)" || (echo "'service' variable must be defined" && exit 1)
 
 create_job: require_service
@@ -67,7 +67,8 @@ create_job: require_service
 	aws glue create-job --name $(JOB_NAME_BASE)_LogMaster_$(SCRIPT_VERSION) \
 		--description "$(JOB_NAME_BASE) Log infra generator" \
 		--role AWSGlueServiceRoleDefault \
-		--command Name=glueetl,ScriptLocation=$(SAMPLE_SCRIPT_PATH) \
+		--command Name=glueetl,ScriptLocation=$(SAMPLE_SCRIPT_PATH),PythonVersion=3 \
+		--glue-version 2.0 \
 		--default-arguments '{ \
 			"--extra-py-files":"$(RELEASE_LATEST_PATH)", \
 			"--TempDir":"$(GLUE_TEMP_S3_LOCATION)", \

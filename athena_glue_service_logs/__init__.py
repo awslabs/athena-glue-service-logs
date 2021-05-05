@@ -13,6 +13,3 @@
 
 """athena_glue_service_logs is a library for converting AWS Service Logs into a more Athena-friendly format"""
 import sys
-
-# Ensure python version 2.7.x as this was written before glue supported python 3
-assert sys.version_info[:2] == (2, 7), "athena-glue-service-logs currently only supports python 2.7."

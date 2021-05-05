@@ -23,9 +23,8 @@ logging.basicConfig(level=logging.INFO)
 LOGGER = logging.getLogger(__name__)
 
 
-class BaseCatalogManager(object):
+class BaseCatalogManager(metaclass=abc.ABCMeta):
     """This class manages the Glue Data Catalog and maintains partitions"""
-    __metaclass__ = abc.ABCMeta
     MAX_PARTITION_INPUT_PER_CALL = 100
     FILE_GROUPING_PARAMS = {'groupFiles': 'inPartition', 'groupSize': '134217728'}
 
@@ -92,11 +91,11 @@ class BaseCatalogManager(object):
     def create_partitions(self, partition_list):
         """Create the specified partitions in this database table"""
         # Instead of importing math.ceil and converting to floats, round up if we need to
-        floor_parts = (len(partition_list) / self.MAX_PARTITION_INPUT_PER_CALL)
+        floor_parts = (len(partition_list) // self.MAX_PARTITION_INPUT_PER_CALL)
         remainder_exists = (len(partition_list) % self.MAX_PARTITION_INPUT_PER_CALL > 0)
         num_calls = floor_parts + remainder_exists
 
-        for i in xrange(num_calls):
+        for i in range(num_calls):
             start_from = i * self.MAX_PARTITION_INPUT_PER_CALL
             end_at = start_from + self.MAX_PARTITION_INPUT_PER_CALL
             self.create_partition_from_slice(partition_list, start_from, end_at)

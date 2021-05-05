@@ -17,9 +17,8 @@ import time
 from datetime import datetime, timedelta, date
 
 
-class BasePartitioner(object):
+class BasePartitioner(metaclass=abc.ABCMeta):
     """Partioner classes help identify what a given service log's file structure in S3 is."""
-    __metaclass__ = abc.ABCMeta
 
     def __init__(self, s3_location, hive_compatible=False):
         """Create a new instance of a partitioner. An S3 location must be provided.
@@ -51,7 +50,7 @@ class BasePartitioner(object):
         Does _not_ include the original date tuple.
         """
         partitions = []
-        date_ints = map(int, date_tuple)
+        date_ints = list(map(int, date_tuple))
         initial_date = date(*date_ints)
         today = datetime.utcfromtimestamp(time.time()).date()  # Similar to date.today() but accounts for UTC
 
@@ -79,6 +78,6 @@ class BasePartitioner(object):
     def _get_hive_partitioned_parts(self, partition_values):
         """Takes a list of partition values and returns a list of Hive-compatible key names"""
         partition_names = [val['Name'] for val in self.partition_keys()]
-        partitions = map('='.join, zip(partition_names, partition_values))
+        partitions = list(map('='.join, list(zip(partition_names, partition_values))))
 
         return partitions

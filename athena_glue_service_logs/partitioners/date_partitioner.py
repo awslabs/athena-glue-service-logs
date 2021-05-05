@@ -55,7 +55,7 @@ class DatePartitioner(BasePartitioner):
         day_diff = 0
 
         # Only go back MAX_RECENT_DAYS days for now and only if S3 objects actually exist...
-        for _ in xrange(self.MAX_RECENT_DAYS):
+        for _ in range(self.MAX_RECENT_DAYS):
             new_day = today + timedelta(days=day_diff)
             new_day_tuple = new_day.strftime('%Y-%m-%d').split('-')
             if not existing_partitions or existing_partitions[-1] != new_day_tuple:

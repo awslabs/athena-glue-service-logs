@@ -3,7 +3,7 @@ import boto3
 from botocore.stub import Stubber
 
 
-class S3Stubber(object):
+class S3Stubber:
     def __init__(self, for_method):
         self.client = boto3.client("s3")
         self.stubber = Stubber(self.client)
