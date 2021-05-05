@@ -67,7 +67,8 @@ create_job: require_service
 	aws glue create-job --name $(JOB_NAME_BASE)_LogMaster_$(SCRIPT_VERSION) \
 		--description "$(JOB_NAME_BASE) Log infra generator" \
 		--role AWSGlueServiceRoleDefault \
-		--command Name=glueetl,ScriptLocation=$(SAMPLE_SCRIPT_PATH) \
+		--command Name=glueetl,ScriptLocation=$(SAMPLE_SCRIPT_PATH),PythonVersion=3 \
+		--glue-version 2.0 \
 		--default-arguments '{ \
 			"--extra-py-files":"$(RELEASE_LATEST_PATH)", \
 			"--TempDir":"$(GLUE_TEMP_S3_LOCATION)", \
