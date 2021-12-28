@@ -166,3 +166,14 @@ Create an issue if you have requests for others!
 - [ ] Graceful schema upgrades
 - [ ] Allow for custom backfill timeframe
 - [ ] Data type conversions when writing to Parquet
+
+## Blueprint Testing
+
+In order to publish the blueprint, we need to package up the library, Blueprint resources, and configuration.
+
+Detailed steps in the docs: https://docs.aws.amazon.com/glue/latest/dg/developing-blueprints-publishing.html
+
+```shell
+zip -r agsl_002.zip awglue athena_glue_service_logs
+cd blueprint && zip -u ../agsl_002.zip blueprint.cfg layout.py && cd ..
+```
