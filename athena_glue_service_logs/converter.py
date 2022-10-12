@@ -33,7 +33,7 @@ class DataConverter:
 
     def run(self):
         """Extract data from the data catalog and convert it to parquet, partitioning it along the way"""
-        from awsglue.transforms import DropNullFields
+        from pyspark.sql.types import NullType
 
         # Retrieve the source data from the Glue catalog
         source_data = self.glue_context.create_dynamic_frame.from_catalog(
@@ -45,11 +45,14 @@ class DataConverter:
         # Perform any data-source-specific conversions
         optimized_transforms = self.optimized_catalog.conversion_actions(source_data)
 
-        # Remove nulls and convert to dataframe - dataframe is only needed for replacing the date partitions.
+        # convert to dataframe - dataframe is only needed for replacing the date partitions.
         # It was previously used to repartition, but Glue supports that now.
-        drop_nulls = DropNullFields.apply(frame=optimized_transforms, transformation_ctx="drop_nulls")
-        data_frame = drop_nulls.toDF()
-
+        data_frame = optimized_transforms.toDF()
+        # Remove nulls and convert to dataframe 
+        cols = data_frame.schema.fields
+        for col in cols:
+            if isinstance(col.dataType,NullType):
+                data_frame = data_frame.drop(col.name)
         # We might have no data - if that's the case, short-circuit
         if not data_frame.head(1):
             LOGGER.info("No data returned, skipping conversion.")
