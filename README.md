@@ -2,7 +2,8 @@
 
 Glue jobs and library to manage conversion of AWS Service Logs into Athena-friendly formats.
 
-_Note that this library is under active development. If you run into issues, please file an issue or reach out to [@dacort](https://twitter.com/dacort)._
+> [!WARNING]
+> This repository is now archived. It was initially developed for Glue v1 and while useful for patterns to process AWS service logs, there are better options including [Amazon Security Lake](https://aws.amazon.com/security-lake/) and it's now possible to [partition S3 access logs by default](https://aws.amazon.com/about-aws/whats-new/2023/11/amazon-s3-server-access-logging-date-partitioning/).
 
 ## Overview
 
